@@ -1,0 +1,31 @@
+name: build-dev
+
+on:
+    pull_request:
+        branches: [main]
+        types:
+            - closed
+    
+    workflow_dispatch:
+      inputs:
+        SOURCE_BRANCH:
+            description: source branch
+            required: false
+            default: main
+
+jobs:
+    build: 
+      name: create release tag for build-dev
+      runs-on: ["self-hosted", "Linux"]
+      defaults:
+        run:
+          shell: bash
+      steps:
+          - uses: actions/checkout@v3
+      
+          - name: Get release version
+            run: |
+              if  [ "${{ github.event.inputs.SOURCE_BRANCH}}" != "main" ]; then SOURCE_BRANCH=$(echo SOURCE_BRANCH=$(echo ${{ github.event.inputs.SOURCE_BRANCH}} | head -n1 | awk '{print $1;}') | cut -d -f2); fi;
+              echo "SOURCE_BRANCH IS $SOURCE_BRANCH"
+
+
