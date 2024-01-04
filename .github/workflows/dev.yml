@@ -25,8 +25,9 @@ jobs:
 
           - name: Get release version
             run: |
-              echo ${{ github.event.inputs.SOURCE_BRANCH }}
-              if [ "feature/PDSS-1622/testing_pipelines" != "main" ]; then SOURCE_BRANCH=$(echo feature/PDSS-1622/testing_pipelines | head -n1 | awk '{print $1;}' | cut -d/ -f2); fi;
+              echo "${{ github.event.inputs.SOURCE_BRANCH }}"
+              echo "input SOURCE_BRANCH : ${{ github.event.inputs.SOURCE_BRANCH }}"
+              if [ "${{ github.event.inputs.SOURCE_BRANCH }}" != "main" ]; then SOURCE_BRANCH=$(echo ${{ github.event.inputs.SOURCE_BRANCH }} | head -n1 | awk '{print $1;}' | cut -d/ -f2); fi;
               echo "SOURCE_BRANCH IS $SOURCE_BRANCH"
 
 
